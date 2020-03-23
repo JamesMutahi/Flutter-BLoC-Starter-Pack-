@@ -31,7 +31,7 @@ class AuthProvider {
     // Get token
     try {
       Response response = await dio.post(
-        '$host/rest-auth/register/',
+        '$host/rest-auth/registration/',
         data: {
           "email": email,
           "username": username,
