@@ -12,7 +12,7 @@ class AuthProvider {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult != ConnectivityResult.none) {
       try {
-        final result = await InternetAddress.lookup('example.com');
+        final result = await InternetAddress.lookup(host);
         if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
           return true;
         }
@@ -45,18 +45,16 @@ class AuthProvider {
             }),
       );
       if (response.statusCode == 200) {
-        return response.data['token'];
+        return response.data['key'];
       } else if (response.statusCode == 401) {
         throw (response.data);
       }
     } on DioError catch (e) {
       String message = "Error connecting to API: $e";
-      return message;
+      throw message;
     } catch (e) {
       throw e;
     }
-
-    throw ("Check Internet connection. Cannot connect.");
   }
 
   Future<dynamic> authenticate({
@@ -75,7 +73,7 @@ class AuthProvider {
             }),
       );
       if (response.statusCode == 200) {
-        return response.data['token'];
+        return response.data['key'];
       } else if (response.statusCode == 401) {
         throw (response.data);
       }
