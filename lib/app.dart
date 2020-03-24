@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:staff_manager/src/ui/home/index.dart';
 import 'package:staff_manager/src/ui/login/index.dart';
-import 'package:staff_manager/src/ui/utils/splash_loader.dart';
+import 'package:staff_manager/src/ui/utils/index.dart';
 
 
 class App extends StatelessWidget {
@@ -17,7 +17,7 @@ class App extends StatelessWidget {
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthUninitialised) {
-            return SplashLoader();
+            return LoadingIndicator();
           }
           if (state is AuthAuthenticated) {
             return HomePage();
@@ -26,7 +26,7 @@ class App extends StatelessWidget {
             return LoginPage(authRepository: authRepository);
           }
           if (state is AuthLoading) {
-            return SplashLoader();
+            return LoadingIndicator();
           }
         },
       ),
